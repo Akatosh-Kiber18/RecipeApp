@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  calories: 1.5
+  fats: 1.5
+  proteins: 1.5
+
+two:
+  name: MyString
+  calories: 1.5
+  fats: 1.5
+  proteins: 1.5
