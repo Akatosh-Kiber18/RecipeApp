@@ -1,2 +1,39 @@
 <h1><%= @recipe.title %></h1>
 <p><%= @recipe.instructions %></p>
+
+<h2>Ingredients</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Calories</th>
+    <th>Fats</th>
+    <th>Proteins</th>
+    <th>Weight</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @recipe.ingredients.each do |ingredient| %>
+    <tr>
+      <td><%= ingredient.name %></td>
+      <td><%= ingredient.calories %></td>
+      <td><%= ingredient.fats %></td>
+      <td><%= ingredient.proteins %></td>
+      <td><%= ingredient.weight %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td><strong>Total</strong></td>
+    <td><strong><%= @recipe.ingredients.sum(:calories) %></strong></td>
+    <td><strong><%= @recipe.ingredients.sum(:fats) %></strong></td>
+    <td><strong><%= @recipe.ingredients.sum(:proteins) %></strong></td>
+    <td><strong><%= @recipe.ingredients.sum(:weight) %></strong></td>
+  </tr>
+  </tfoot>
+</table>
+
+<%= link_to 'Back to Recipes', root_path %>
+<%= link_to 'Destroy', @recipe, method: :delete, data: { confirm: 'Are you sure you want to delete this recipe?' } %>

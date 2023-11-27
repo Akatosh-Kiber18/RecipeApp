@@ -1,0 +1,6 @@
+<%= form.fields_for :ingredients, Ingredient.new, child_index: Time.now.to_i do |ingredient_form| %>
+  <div class="ingredient-fields" id="ingredient_<%= unique_id %>">
+    <%= ingredient_form.text_field :name, placeholder: 'Ingredient Name' %>
+    <%= ingredient_form.text_field :weight, placeholder: 'Weight' %>
+  </div>
+<% end %>
