@@ -26,7 +26,7 @@ class RecipesController < ApplicationController
       @recipe = Recipe.new(recipe)
 
       if @recipe.save
-        redirect_to add_ingredients, notice: 'Recipe was successfully created.'
+        redirect_to @recipe, notice: 'Recipe was successfully created.'
       else
         render :new
       end
