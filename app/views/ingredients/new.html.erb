@@ -1,0 +1,13 @@
+<%= form_with(model: @ingredient, url: ingredients_path(recipe_id: @recipe_id), method: :post) do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :weight %>
+    <%= form.text_field :weight %>
+  </div>
+  <div>
+    <%= form.submit 'Add ingredient' %>
+  </div>
+<% end %>

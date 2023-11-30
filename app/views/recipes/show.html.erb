@@ -1,7 +1,7 @@
 <h1><%= @recipe.title %></h1>
 <p><%= @recipe.instructions %></p>
 
-<h2>Ingredients</h2>
+<h2>Ingredients:</h2>
 
 <table>
   <thead>
@@ -14,13 +14,24 @@
   </tr>
   </thead>
   <tbody>
-  <% @recipe.ingredients.each do |ingredient| %>
+  <% if @recipe.ingredients.length > 0 %>
+    <% @recipe.ingredients.each do |ingredient| %>
+      <tr>
+        <td><%= ingredient.name %></td>
+        <td><%= ingredient.calories %></td>
+        <td><%= ingredient.fats %></td>
+        <td><%= ingredient.proteins %></td>
+        <td><%= ingredient.weight %></td>
+        <td><%= link_to 'Destroy', ingredient, method: :delete, data: { confirm: 'Are you sure you want to delete this recipe?' } %></td>
+      </tr>
+    <% end %>
+    <td colspan="5"><%= link_to 'Add ingredients', new_ingredient_path(recipe_id: @recipe.id) %></td>
+  <% else %>
     <tr>
-      <td><%= ingredient.name %></td>
-      <td><%= ingredient.calories %></td>
-      <td><%= ingredient.fats %></td>
-      <td><%= ingredient.proteins %></td>
-      <td><%= ingredient.weight %></td>
+      <td colspan="5">No ingredients</td>
+    </tr>
+    <tr>
+      <td colspan="5"><%= link_to 'Add ingredients', new_ingredient_path(recipe_id: @recipe.id) %></td>
     </tr>
   <% end %>
   </tbody>

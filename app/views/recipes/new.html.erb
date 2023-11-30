@@ -1,85 +1,17 @@
 <h1>New Recipe</h1>
 
-<%= form_with(model: @recipe, url: recipes_path, method: :post, html: { id: 'new_recipe_form' }) do |form| %>
+<%= form_with(model: @recipe, url: recipes_path, method: :post) do |form| %>
   <div>
     <%= form.label :title %>
     <%= form.text_field :title %>
   </div>
-
   <div>
     <%= form.label :instructions %>
     <%= form.text_area :instructions %>
   </div>
-
-  <div id="ingredients-container">
-  </div>
-
-  <label for="ingredient_name">Ingredient Name:</label>
-  <input type="text" id="ingredient_name" placeholder="Ingredient Name">
-
-  <label for="ingredient_weight">Weight:</label>
-  <input type="text" id="ingredient_weight" placeholder="Weight">
-
-  <button type="button" id="add-ingredient">Add Ingredient</button>
-
   <div>
     <%= form.submit 'Create Recipe' %>
   </div>
 <% end %>
 
 <%= link_to 'Back to Recipes', recipes_path %>
-
-<script>
-        const form = document.getElementById('new_recipe_form');
-        const addIngredientButton = document.getElementById('add-ingredient');
-        const ingredientsContainer = document.getElementById('ingredients-container');
-
-        let ingredientsData = [];
-
-        if (addIngredientButton) {
-            addIngredientButton.addEventListener('click', function() {
-                console.log('Button clicked!');
-                console.log(ingredientsData);
-
-                addIngredient();
-            });
-        }
-
-        function addIngredient() {
-            const ingredientName = document.getElementById('ingredient_name').value;
-            const ingredientWeight = document.getElementById('ingredient_weight').value;
-
-            if (ingredientName && ingredientWeight) {
-                let ingredientData = { name: ingredientName, weight: ingredientWeight };
-                ingredientsData.push(ingredientData);
-
-                displayIngredients();
-                clearInputFields();
-            } else {
-                alert('Please provide both ingredient name and weight.');
-            }
-        }
-
-        function displayIngredients() {
-            ingredientsContainer.innerHTML = '';
-
-            ingredientsData.forEach(function(ingredient) {
-                let ingredientDiv = document.createElement('div');
-                ingredientDiv.innerHTML = '<p>' + ingredient.name + ' - ' + ingredient.weight + '</p>';
-                ingredientsContainer.appendChild(ingredientDiv);
-            });
-        }
-
-        function clearInputFields() {
-            document.getElementById('ingredient_name').value = '';
-            document.getElementById('ingredient_weight').value = '';
-        }
-
-        form.addEventListener('submit', function() {
-            const ingredientsInput = document.createElement('input');
-            ingredientsInput.type = 'hidden';
-            ingredientsInput.name = 'recipe[ingredients_data]';
-            ingredientsInput.value = JSON.stringify(ingredientsData);
-            form.appendChild(ingredientsInput);
-        });
-</script>
