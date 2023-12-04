@@ -47,3 +47,13 @@ rails db:migrate
 ```bash
 rails s
 ```
+
+## Docker run
+1. Build image from the repo root
+```bash
+docker build -t recipe_app:0.1 .
+```
+2. Run container using new image
+```bash
+docker run -p 3000:3000 recipe_app:0.1
+```
