@@ -1,12 +1,15 @@
 class RecipesController < ApplicationController
-
+  # while testing remove CSRF Protection
+  skip_before_action :verify_authenticity_token
   before_action :set_recipe, only: [:show, :destroy]
   def index
     @recipes = Recipe.all
+    render json: @recipes
   end
 
   def show
     @recipe = Recipe.find(params[:id])
+    render json: @recipe
   end
 
   def new
@@ -18,18 +21,17 @@ class RecipesController < ApplicationController
   end
 
   def create
-      recipe ={
-        "title" => params[:recipe][:title],
-        "instructions" => params[:recipe][:instructions],
-      }
+    # "Content-Type" header, in this case, "application/json,"
+    recipe_params = params.require(:recipe).permit(:title, :instructions)
+    @recipe = Recipe.new(recipe_params)
 
-      @recipe = Recipe.new(recipe)
-
+    respond_to do |format|
       if @recipe.save
-        redirect_to @recipe, notice: 'Recipe was successfully created.'
+        format.json { render :show, status: :created, location: @recipe }
       else
-        render :new
+        format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
+    end
   end
 
   def destroy
