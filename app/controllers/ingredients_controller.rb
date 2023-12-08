@@ -1,4 +1,7 @@
 class IngredientsController < ApplicationController
+  # while testing remove CSRF Protection
+  # TODO REMOVE THIS AND FIGURE HOW IT WILL WORK WITH REACT
+  skip_before_action :verify_authenticity_token
   before_action :set_recipe, only: [:create, :destroy]
 
   def new
@@ -6,29 +9,27 @@ class IngredientsController < ApplicationController
   end
 
   def create
-    ingredient = {
-      "name" => params[:name],
-      "weight" => params[:weight],
-      "recipe_id" => @recipe_id,
+    ingredient_params = {
+      name: params[:name],
+      weight: params[:weight],
+      recipe_id: @recipe.id
     }
 
-    @ingredient = Ingredient.new(ingredient)
+    @ingredient = Ingredient.new(ingredient_params)
     if @ingredient.save
-      # @recipe = Recipe.find_by(id: @recipe_id)
-      puts "New ingredient saved"
-      redirect_to recipe_path(@recipe)
+      render json: { message: 'Ingredient was successfully created', ingredient: @ingredient }, status: :created
     else
-      puts "Saving failed"
-      puts @ingredient.errors.full_messages.inspect
-      render :new
+      render json: { error: 'Failed to create ingredient', errors: @ingredient.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @ingredient = Ingredient.find(params[:id])
-    @recipe = Recipe.find_by(id: @ingredient.recipe_id)
-    @ingredient.destroy
-    redirect_to recipe_path(@recipe)
+    if @ingredient.destroy
+      render json: { message: 'Ingredient was successfully destroyed' }, status: :ok
+    else
+      render json: { error: 'Failed to destroy ingredient' }, status: :unprocessable_entity
+    end
   end
 
   private

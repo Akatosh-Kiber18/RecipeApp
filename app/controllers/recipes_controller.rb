@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   # while testing remove CSRF Protection
+  # TODO REMOVE THIS AND FIGURE HOW IT WILL WORK WITH REACT
   skip_before_action :verify_authenticity_token
   before_action :set_recipe, only: [:show, :destroy]
   def index
@@ -35,8 +36,11 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    @recipe.destroy
-    redirect_to recipes_path, notice: 'Recipe was successfully destroyed.'
+    if @recipe.destroy
+      render json: { message: 'Recipe was successfully destroyed' }, status: :ok
+    else
+      render json: { error: 'Failed to destroy recipe' }, status: :unprocessable_entity
+    end
   end
 
   private
