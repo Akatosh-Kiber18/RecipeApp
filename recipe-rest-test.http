@@ -1,0 +1,19 @@
+### GET ALL RECIPES
+GET localhost:3000/recipes
+
+### GET ONE RECIPE
+GET localhost:3000/recipes/1
+
+### ADD NEW RECIPE
+POST localhost:3000/recipes
+Content-Type: application/json
+
+{
+  "recipe": {
+    "title": "Cake",
+    "instructions": "A lot of sugar and biscuits"
+  }
+}
+
+### DESTROY THE RECIPE
+DELETE localhost:3000/recipes/41

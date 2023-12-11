@@ -34,6 +34,7 @@
       <td colspan="5"><%= link_to 'Add ingredients', new_ingredient_path(recipe_id: @recipe.id) %></td>
     </tr>
   <% end %>
+  <%= render partial: 'shared/modal' %>
   </tbody>
   <tfoot>
   <tr>
