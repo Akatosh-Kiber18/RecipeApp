@@ -1,0 +1,83 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/recipes":
+    get:
+      summary: Retrieves a list of recipes
+      tags:
+      - Recipes
+      responses:
+        '200':
+          description: list of recipes
+    post:
+      summary: Creates a new recipe
+      tags:
+      - Recipes
+      parameters: []
+      responses:
+        '201':
+          description: recipe created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                instructions:
+                  type: string
+              required:
+              - title
+              - instructions
+  "/recipes/{id}":
+    get:
+      summary: Retrieves a recipe by ID
+      tags:
+      - Recipes
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: recipe found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  instructions:
+                    type: string
+                required:
+                - id
+                - title
+                - instructions
+        '404':
+          description: recipe not found
+    delete:
+      summary: Deletes a recipe
+      tags:
+      - Recipes
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: recipe deleted
+        '404':
+          description: recipe not found
